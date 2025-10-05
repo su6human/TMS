@@ -31,6 +31,7 @@ git tag v1.0.0
 git push origin main --tags
 git checkout develop
 git merge main
+
 6.Если найден критический баг в продакшене:
 git checkout main
 git checkout -b hotfix/fix-db-connection

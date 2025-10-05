@@ -9,7 +9,8 @@ git checkout -b feature/add-employee-dao
 git add .
 git commit -m "feat(employee): add DAO class for managing employees"
 git push origin feature/add-employee-dao
-4. Добавляем комиты 
+
+5. Добавляем комиты 
 Пример: fix(dao): handle null pointer in update method
 Все команды
 feat	новая функциональность
@@ -19,6 +20,7 @@ refactor	улучшение кода без изменения логики
 style	форматирование (отступы, пробелы, и т.д.)
 test	добавление или обновление тестов
 chore	мелкие задачи, не влияющие на код (например, .gitignore)
+
 5.Когда проект готов к тестированию перед релизом:
 git checkout develop
 git checkout -b release/v1.0.0

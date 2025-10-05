@@ -19,3 +19,23 @@ refactor	улучшение кода без изменения логики
 style	форматирование (отступы, пробелы, и т.д.)
 test	добавление или обновление тестов
 chore	мелкие задачи, не влияющие на код (например, .gitignore)
+5.Когда проект готов к тестированию перед релизом:
+git checkout develop
+git checkout -b release/v1.0.0
+После тестирования:
+git checkout main
+git merge release/v1.0.0
+git tag v1.0.0
+git push origin main --tags
+git checkout develop
+git merge main
+6.Если найден критический баг в продакшене:
+git checkout main
+git checkout -b hotfix/fix-db-connection
+После исправления:
+git commit -m "fix(database): resolve connection timeout issue"
+git checkout main
+git merge hotfix/fix-db-connection
+git tag v1.0.1
+git checkout develop
+git merge main

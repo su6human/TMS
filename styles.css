@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #F7F9FC;
+    padding: 20px;
+}
+.task-list {
+    display: grid;
+    gap: 16px;
+}
+
+@media (min-width: 600px) {
+    .task-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .task-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

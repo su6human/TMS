@@ -8,3 +8,16 @@ function addTask(title) {
 }
 
 addTask("Первая задача!");
+
+const addTaskBtn = document.getElementById("add-task-btn");
+const modal = document.getElementById("modal");
+
+addTaskBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+});
+
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.classList.add("hidden");
+    }
+});

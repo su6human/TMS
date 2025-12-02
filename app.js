@@ -4,6 +4,13 @@ function addTask(title, desc, date) {
     const div = document.createElement('div');
     div.className = "task-card";
     div.innerHTML = `
+    <h3>${title}</h3>
+    <p>${desc}</p>
+    <small>${date}</small>
+    <button class="delete-btn">Delete</button>
+`;
+
+    div.innerHTML = `
         <h3>${title}</h3>
         <p>${desc}</p>
         <small>${date}</small>
@@ -47,3 +54,10 @@ saveTaskBtn.addEventListener("click", () => {
 
     modal.classList.add("hidden");
 });
+
+taskList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+        e.target.parentElement.remove();
+    }
+});
+

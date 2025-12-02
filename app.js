@@ -1,13 +1,15 @@
 const taskList = document.getElementById('task-list');
 
-function addTask(title) {
+function addTask(title, desc, date) {
     const div = document.createElement('div');
     div.className = "task-card";
-    div.innerHTML = `<h3>${title}</h3>`;
+    div.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <small>${date}</small>
+    `;
     taskList.appendChild(div);
-}
-
-addTask("Первая задача!");
+};
 
 const addTaskBtn = document.getElementById("add-task-btn");
 const modal = document.getElementById("modal");
@@ -20,4 +22,28 @@ modal.addEventListener("click", (e) => {
     if (e.target === modal) {
         modal.classList.add("hidden");
     }
+});
+
+const saveTaskBtn = document.getElementById("save-task");
+const titleInput = document.getElementById("task-title");
+const descInput = document.getElementById("task-desc");
+const dateInput = document.getElementById("task-date");
+
+saveTaskBtn.addEventListener("click", () => {
+    const title = titleInput.value.trim();
+    const desc = descInput.value.trim();
+    const date = dateInput.value;
+
+    if (!title) {
+        alert("Task title is required");
+        return;
+    }
+
+    addTask(title, desc, date);
+
+    titleInput.value = "";
+    descInput.value = "";
+    dateInput.value = "";
+
+    modal.classList.add("hidden");
 });

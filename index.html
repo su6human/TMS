@@ -1,40 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TimeFlow</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<button id="add-task-btn">Добавить задачу</button>
 
-    <script src="app.js"></script>
+<div id="modal" class="hidden">
+    <div class="modal-content">
+        <input id="task-title" placeholder="Название">
+        <input id="task-desc" placeholder="Описание">
+        <input id="task-date" type="date">
 
-    <header class="header">
-        <h1>TimeFlow</h1>
-        <button id="add-task-btn">+ Добавить задачу</button>
-    </header>
-    
-    <section class="filters">
-        <button>Все</button>
-        <button>Сегодня</button>
-        <button>Неделя</button>
-        <button>Выполненные</button>
-    </section>
-    
-    <section class="task-list" id="task-list">
-        <!-- Здесь будут задачи -->
-    </section>
-    
-    <div class="modal hidden" id="modal">
-        <div class="modal-content">
-            <h2>Новая задача</h2>
-            <input id="task-title" placeholder="Название задачи">
-            <textarea id="task-desc" placeholder="Описание"></textarea>
-            <input type="date" id="task-date">
-            <button id="save-task">Сохранить</button>
-        </div>
+        <button id="save-task">Сохранить</button>
     </div>
-    
-</body>
-</html>
+</div>
+
+<div id="task-list"></div>
+
+<script src="app.js"></script>

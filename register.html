@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Регистрация — TimeFlow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>Регистрация</h2>
+
+      <label class="field">
+        <span>Имя пользователя</span>
+        <input type="text" id="reg-username" placeholder="Придумайте имя">
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" id="reg-email" placeholder="example@mail.com">
+      </label>
+
+      <label class="field">
+        <span>Пароль</span>
+        <input type="password" id="reg-password" placeholder="Пароль">
+      </label>
+
+      <label class="field">
+        <span>Повторите пароль</span>
+        <input type="password" id="reg-password2" placeholder="Повторите пароль">
+      </label>
+
+      <div class="auth-actions">
+        <button id="register-btn" class="btn-primary">Зарегистрироваться</button>
+        <a href="login.html" class="link">Уже есть аккаунт? Войти</a>
+      </div>
+
+      <div id="reg-msg" class="msg"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

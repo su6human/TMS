@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Задачи — TimeFlow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-grid">
+      <h1 class="brand small">TimeFlow</h1>
+      <nav class="nav">
+        <button id="logout-btn" class="btn-outline">Выйти</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tasks-page">
+    <div class="tasks-top">
+      <h2 id="welcome-txt">Мои задачи</h2>
+      <div>
+        <button id="add-task-btn" class="btn-primary">Добавить задачу</button>
+      </div>
+    </div>
+
+    <div id="task-list" class="task-list"></div>
+  </main>
+
+  <!-- Модалка -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Новая задача</h3>
+      <input id="task-title" placeholder="Название" />
+      <input id="task-desc" placeholder="Описание" />
+      <input id="task-date" type="date" />
+      <div class="modal-actions">
+        <button id="save-task" class="btn-primary">Сохранить</button>
+        <button id="cancel-task" class="btn-outline">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

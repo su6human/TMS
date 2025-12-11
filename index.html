@@ -1,15 +1,56 @@
-<button id="add-task-btn">Добавить задачу</button>
-
-<div id="modal" class="hidden">
-    <div class="modal-content">
-        <input id="task-title" placeholder="Название">
-        <input id="task-desc" placeholder="Описание">
-        <input id="task-date" type="date">
-
-        <button id="save-task">Сохранить</button>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TimeFlow — Главная</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-grid">
+      <h1 class="brand">TimeFlow</h1>
+      <nav class="nav">
+        <a href="login.html" class="btn-outline">Войти</a>
+        <a href="register.html" class="btn-primary">Регистрация</a>
+      </nav>
     </div>
-</div>
+  </header>
 
-<div id="task-list"></div>
+  <main class="hero">
+    <div class="container hero-grid">
+      <section class="hero-left">
+        <h2>Организуй свой день с TimeFlow</h2>
+        <p>Всегда будь готова — уменьшай стресс, планируя задачи заранее. Простая и понятная система для управления повседневными делами.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="register.html">Начать</a>
+          <a class="btn-outline" href="login.html">У меня уже есть аккаунт</a>
+        </div>
+      </section>
 
-<script src="app.js"></script>
+      <section class="hero-right">
+        <div class="mockphone">
+          <!--styling-only illustration block-->
+          <div class="phone-screen">
+            <div class="phone-row"></div>
+            <div class="phone-card"></div>
+            <div class="phone-card small"></div>
+            <div class="phone-card small"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> TimeFlow — простая система планирования</p>
+    </div>
+  </footer>
+
+  <script>
+    // small inline script for year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

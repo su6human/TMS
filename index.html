@@ -1,56 +1,54 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TimeFlow — Главная</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>TimeFlow — Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="auth.css" />
 </head>
-<body>
-  <header class="site-header">
-    <div class="container header-grid">
-      <h1 class="brand">TimeFlow</h1>
-      <nav class="nav">
-        <a href="login.html" class="btn-outline">Войти</a>
-        <a href="register.html" class="btn-primary">Регистрация</a>
-      </nav>
-    </div>
-  </header>
+<body class="auth-body">
+  <div class="bg-circle bg-circle-top-left"></div>
+  <div class="bg-circle bg-circle-bottom-right"></div>
 
-  <main class="hero">
-    <div class="container hero-grid">
-      <section class="hero-left">
-        <h2>Организуй свой день с TimeFlow</h2>
-        <p>Всегда будь готова — уменьшай стресс, планируя задачи заранее. Простая и понятная система для управления повседневными делами.</p>
-        <div class="hero-actions">
-          <a class="btn-primary" href="register.html">Начать</a>
-          <a class="btn-outline" href="login.html">У меня уже есть аккаунт</a>
+  <div class="auth-container auth-container-hero">
+    <div class="hero-left">
+      <h1 class="app-name">TimeFlow</h1>
+      <div class="app-logo-icon">
+        <span class="logo-book">📖</span>
+      </div>
+
+      <p class="hero-text">
+        Always get yourself prepared with <strong>TimeFlow</strong>.
+        This will reduce your daily stress and improve your scheduled
+        activities with advance improvements.
+      </p>
+
+      <button class="primary-btn hero-btn" id="hero-start-btn">
+        Let’s start
+      </button>
+    </div>
+
+    <div class="hero-right">
+      <div class="phone-illustration">
+        <div class="phone-screen">
+          <div class="phone-row phone-row-primary"></div>
+          <div class="phone-row"></div>
+          <div class="phone-row"></div>
+          <div class="phone-row phone-row-wide"></div>
         </div>
-      </section>
-
-      <section class="hero-right">
-        <div class="mockphone">
-          <!--styling-only illustration block-->
-          <div class="phone-screen">
-            <div class="phone-row"></div>
-            <div class="phone-card"></div>
-            <div class="phone-card small"></div>
-            <div class="phone-card small"></div>
-          </div>
+        <div class="phone-person">
+          <!-- просто декоративный круг и силуэт -->
+          <div class="person-body"></div>
         </div>
-      </section>
+      </div>
     </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> TimeFlow — простая система планирования</p>
-    </div>
-  </footer>
+  </div>
 
   <script>
-    // small inline script for year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Переход к регистрации
+    document.getElementById("hero-start-btn").addEventListener("click", function () {
+      window.location.href = "signup.html";
+    });
   </script>
 </body>
 </html>

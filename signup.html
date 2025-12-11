@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TimeFlow — Sign up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body class="auth-body">
+  <div class="bg-circle bg-circle-top-left"></div>
+  <div class="bg-circle bg-circle-bottom-right"></div>
+
+  <div class="auth-container">
+    <h1 class="auth-title">Welcome!</h1>
+    <p class="auth-subtitle">
+      Let’s assist you in achieving your tasks.
+    </p>
+
+    <form class="auth-form" id="signup-form" novalidate>
+      <div class="input-pill">
+        <input
+          type="text"
+          id="signup-name"
+          placeholder="Enter your full name"
+          autocomplete="name"
+        />
+      </div>
+
+      <div class="input-pill">
+        <input
+          type="email"
+          id="signup-email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="input-pill">
+        <input
+          type="password"
+          id="signup-password"
+          placeholder="Enter your password"
+          autocomplete="new-password"
+        />
+      </div>
+
+      <div class="input-pill">
+        <input
+          type="password"
+          id="signup-confirm"
+          placeholder="Confirm your password"
+          autocomplete="new-password"
+        />
+      </div>
+
+      <p class="auth-error" id="signup-error"></p>
+
+      <button type="submit" class="primary-btn auth-main-btn">
+        Get registered
+      </button>
+    </form>
+
+    <p class="auth-bottom-text">
+      Already have an account?
+      <a href="signin.html" class="auth-link">Sign in</a>
+    </p>
+  </div>
+
+  <script>
+    const signupForm = document.getElementById("signup-form");
+    const signupError = document.getElementById("signup-error");
+
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+      const confirm = document.getElementById("signup-confirm").value.trim();
+
+      signupError.textContent = "";
+
+      if (!name || !email || !password || !confirm) {
+        signupError.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      if (password !== confirm) {
+        signupError.textContent = "Passwords do not match.";
+        return;
+      }
+
+      // простая имитация регистрации
+      localStorage.setItem("tf-name", name);
+      localStorage.setItem("tf-email", email);
+
+      alert("Registration successful. Now sign in.");
+      window.location.href = "signin.html";
+    });
+  </script>
+</body>
+</html>

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function logout(){
     localStorage.removeItem('tf_current');
-    location.href = 'login.html';
+    location.href = 'signin.html';
   }
 
   /* ---------- Registration page ---------- */
@@ -92,127 +92,138 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- Tasks page ---------- */
-  const addTaskBtn = document.getElementById('add-task-btn');
-  const modal = document.getElementById('modal');
-  const saveTaskBtn = document.getElementById('save-task');
-  const cancelTaskBtn = document.getElementById('cancel-task');
-  const titleInput = document.getElementById('task-title');
-  const descInput = document.getElementById('task-desc');
-  const dateInput = document.getElementById('task-date');
-  const taskListEl = document.getElementById('task-list');
-  const welcomeTxt = document.getElementById('welcome-txt');
-  const logoutBtn = document.getElementById('logout-btn');
-
-  if (logoutBtn) logoutBtn.addEventListener('click', logout);
-
-  if (window.location.pathname.endsWith('tasks.html') || window.location.pathname.endsWith('/tasks.html')) {
-    const current = getCurrentUser();
-    if (!current){
-      // если не авторизован — редирект на вход
-      location.href = 'login.html';
-      return;
-    }
-    if (welcomeTxt) welcomeTxt.textContent = `Мои задачи — ${current}`;
-
-    const storeKey = `tasks_${current}`;
-
-    function loadTasks(){
-      try {
-        return JSON.parse(localStorage.getItem(storeKey) || '[]');
-      } catch {
-        return [];
-      }
-    }
-    function saveTasks(tasks){
-      localStorage.setItem(storeKey, JSON.stringify(tasks));
-    }
-
-    function renderTasks(){
-      const tasks = loadTasks();
-      taskListEl.innerHTML = '';
-      if (tasks.length === 0){
-        taskListEl.innerHTML = `<div class="task-card"><p style="color:var(--muted)">Задач нет. Нажми «Добавить задачу», чтобы создать первую.</p></div>`;
-        return;
-      }
-      tasks.forEach(t => {
-        const div = document.createElement('div');
-        div.className = 'task-card';
-        div.dataset.id = t.id;
-        div.innerHTML = `
-          <h3>${escapeHtml(t.title)}</h3>
-          <p>${escapeHtml(t.desc || '')}</p>
-          <small>${t.date ? t.date : ''}</small>
-          <button class="delete-btn" title="Удалить">✕</button>
-        `;
-        taskListEl.appendChild(div);
-      });
-    }
-
-    function escapeHtml(s){
-      return String(s)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#39;');
-    }
-
-    // Показываем модал
-    if (addTaskBtn) addTaskBtn.addEventListener('click', () => {
-      titleInput.value = ''; descInput.value = ''; dateInput.value = '';
-      modal.classList.remove('hidden');
-    });
-
-    // Сохранение задачи
-    if (saveTaskBtn) saveTaskBtn.addEventListener('click', () => {
-      const title = (titleInput.value || '').trim();
-      const desc = (descInput.value || '').trim();
-      const date = dateInput.value || '';
-
-      if (!title){
-        alert('Название задачи обязательно');
-        return;
-      }
-      const tasks = loadTasks();
-      const id = Date.now().toString(36);
-      tasks.unshift({ id, title, desc, date });
-      saveTasks(tasks);
-      modal.classList.add('hidden');
-      renderTasks();
-    });
-
-    if (cancelTaskBtn) cancelTaskBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
-
-    // Закрытие модалки кликом вне контента
-    if (modal){
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.add('hidden');
-      });
-    }
-
-    // Удаление задач (делегирование)
-    if (taskListEl){
-      taskListEl.addEventListener('click', (e) => {
-        if (e.target.classList.contains('delete-btn')){
-          const card = e.target.closest('.task-card');
-          const id = card.dataset.id;
-          if (!id) return;
-          let tasks = loadTasks();
-          tasks = tasks.filter(t => t.id !== id);
-          saveTasks(tasks);
-          renderTasks();
-        }
-      });
-    }
-
-    renderTasks();
-  }
-
-  /* ---------- small logout on index if exists ---------- */
-  const logoutIndex = document.getElementById('logout-btn');
-  if (logoutIndex) logoutIndex.addEventListener('click', logout);
-
 });
+// ========== NAVIGATION ==========
+
+const navItems = document.querySelectorAll(".nav-item");
+const pages = document.querySelectorAll(".page");
+const indicator = document.querySelector(".nav-indicator");
+
+function moveIndicatorTo(activeItem) {
+    const rect = activeItem.getBoundingClientRect();
+    const parentRect = activeItem.parentElement.getBoundingClientRect();
+    const offsetTop = rect.top - parentRect.top;
+
+    indicator.style.transform = `translateY(${offsetTop}px)`;
+}
+
+function showPage(pageId) {
+    pages.forEach(p => p.classList.remove("active"));
+    const page = document.getElementById(`page-${pageId}`);
+    if (page) page.classList.add("active");
+}
+
+navItems.forEach(item => {
+    item.addEventListener("click", () => {
+        navItems.forEach(i => i.classList.remove("active"));
+        item.classList.add("active");
+
+        const targetPage = item.dataset.page;
+        showPage(targetPage);
+        moveIndicatorTo(item);
+    });
+});
+
+// начальная позиция индикатора
+const initialActive = document.querySelector(".nav-item.active");
+if (initialActive) {
+    // небольшая задержка, чтобы браузер успел отрисовать
+    setTimeout(() => moveIndicatorTo(initialActive), 50);
+}
+
+// ========== ACCOUNT FORM LOGIC ==========
+
+const accountForm = document.getElementById("accountForm");
+const editBtn = document.getElementById("editProfileBtn");
+const cancelBtn = document.getElementById("cancelEditBtn");
+const saveBtn = document.getElementById("saveProfileBtn");
+const toast = document.getElementById("toast");
+const nameHeading = document.getElementById("accountNameHeading");
+
+const formFields = ["firstName", "lastName", "email", "phone", "city", "bio"];
+
+// дефолтные данные
+const defaultData = {
+    firstName: "Jimmy",
+    lastName: "Steven",
+    email: "mrbeast_1@gmail.com",
+    phone: "+1 669 457 3671",
+    city: "Bishkek",
+    bio: "Student"
+};
+
+function loadData() {
+    const stored = localStorage.getItem("accountData");
+    const data = stored ? JSON.parse(stored) : defaultData;
+
+    formFields.forEach(name => {
+        const field = document.getElementById(name);
+        if (field && data[name] !== undefined) {
+            field.value = data[name];
+        }
+    });
+
+    updateHeadingName();
+}
+
+function saveData() {
+    const data = {};
+    formFields.forEach(name => {
+        const field = document.getElementById(name);
+        data[name] = field.value.trim();
+    });
+    localStorage.setItem("accountData", JSON.stringify(data));
+}
+
+function setViewMode(isViewMode) {
+    const inputs = accountForm.querySelectorAll("input, textarea");
+
+    if (isViewMode) {
+        accountForm.classList.add("view-mode");
+        inputs.forEach(i => i.setAttribute("disabled", "disabled"));
+    } else {
+        accountForm.classList.remove("view-mode");
+        inputs.forEach(i => i.removeAttribute("disabled"));
+    }
+}
+
+function updateHeadingName() {
+    const first = document.getElementById("firstName").value.trim() || "Student";
+    const last = document.getElementById("lastName").value.trim() || "Name";
+    nameHeading.textContent = `${first} ${last}`;
+}
+
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+// события
+
+editBtn.addEventListener("click", () => {
+    setViewMode(false);
+});
+
+cancelBtn.addEventListener("click", () => {
+    loadData();
+    setViewMode(true);
+});
+
+accountForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!accountForm.reportValidity()) {
+        return;
+    }
+
+    saveData();
+    setViewMode(true);
+    updateHeadingName();
+    showToast("Profile saved");
+});
+
+// init
+loadData();
+setViewMode(true);
+

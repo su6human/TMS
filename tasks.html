@@ -1,46 +1,159 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Задачи — TimeFlow</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Time Management – Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-grid">
-      <h1 class="brand small">TimeFlow</h1>
-      <nav class="nav">
-        <button id="logout-btn" class="btn-outline">Выйти</button>
-      </nav>
-    </div>
-  </header>
+<div class="app">
 
-  <main class="container tasks-page">
-    <div class="tasks-top">
-      <h2 id="welcome-txt">Мои задачи</h2>
-      <div>
-        <button id="add-task-btn" class="btn-primary">Добавить задачу</button>
-      </div>
-    </div>
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+        <div class="logo">TimeFlow</div>
 
-    <div id="task-list" class="task-list"></div>
-  </main>
+        <nav class="nav">
+            <div class="nav-indicator"></div>
 
-  <!-- Модалка -->
-  <div id="modal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Новая задача</h3>
-      <input id="task-title" placeholder="Название" />
-      <input id="task-desc" placeholder="Описание" />
-      <input id="task-date" type="date" />
-      <div class="modal-actions">
-        <button id="save-task" class="btn-primary">Сохранить</button>
-        <button id="cancel-task" class="btn-outline">Отмена</button>
-      </div>
-    </div>
-  </div>
+            <button class="nav-item active" data-page="dashboard">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Dashboard</span>
+            </button>
 
-  <script src="app.js"></script>
+            <button class="nav-item" data-page="calendar">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Calendar</span>
+            </button>
+
+            <button class="nav-item" data-page="tasks">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Tasks</span>
+            </button>
+
+            <button class="nav-item" data-page="taskboard">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Task board</span>
+            </button>
+
+            <button class="nav-item" data-page="account">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Account</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="nav-item small" data-page="settings">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Settings</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+        <!-- Dashboard (заглушка) -->
+        <section id="page-dashboard" class="page active">
+            <h1>Dashboard</h1>
+            <p>Здесь будет главная аналитика и виджеты.</p>
+        </section>
+
+        <!-- Calendar (заглушка) -->
+        <section id="page-calendar" class="page">
+            <h1>Calendar</h1>
+            <p>Страница календаря.</p>
+        </section>
+
+        <!-- Tasks (заглушка) -->
+        <section id="page-tasks" class="page">
+            <h1>Tasks</h1>
+            <p>Список задач студента.</p>
+        </section>
+
+        <!-- Task board (заглушка) -->
+        <section id="page-taskboard" class="page">
+            <h1>Task board</h1>
+            <p>Канбан доска.</p>
+        </section>
+
+        <!-- Settings (заглушка) -->
+        <section id="page-settings" class="page">
+            <h1>Settings</h1>
+            <p>Общие настройки аккаунта и приложения.</p>
+        </section>
+
+        <!-- ============ ACCOUNT INFORMATION ============ -->
+        <section id="page-account" class="page">
+            <div class="account-header">
+                <div class="account-photo-wrap">
+                    <img
+                        class="account-photo"
+                        src="https://ichef.bbci.co.uk/ace/standard/1376/cpsprodpb/017d/live/8703abf0-2180-11ef-9628-ff2abcc9602e.jpg"
+                        alt="Student photo"
+                    >
+                </div>
+
+                <div class="account-header-info">
+                    <h1 class="account-name" id="accountNameHeading">Student Name</h1>
+                    <p class="account-city">Bishkek, Kyrgyzstan</p>
+                </div>
+
+                <button class="btn primary" id="editProfileBtn">
+                    Edit profile
+                </button>
+            </div>
+
+            <form id="accountForm" class="account-form">
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" name="firstName" type="text" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" name="lastName" type="text" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="phone">Phone</label>
+                        <input id="phone" name="phone" type="tel" placeholder="+996 ...">
+                    </div>
+
+                    <div class="field">
+                        <label for="city">City / Address</label>
+                        <input id="city" name="city" type="text" placeholder="Bishkek">
+                    </div>
+
+                    <div class="field field-bio">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" name="bio" rows="3" placeholder="Short description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn secondary" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn primary" id="saveProfileBtn">Save</button>
+                </div>
+            </form>
+
+            <div id="toast" class="toast">Data saved</div>
+        </section>
+
+    </main>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

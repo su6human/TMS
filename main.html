@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Time Management App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+      <span class="logo-mark">
+    <img src="logo.png" alt="Logo">
+</span>
+        <span class="logo-text">Time Flow</span>
+      </div>
+
+      <nav class="menu">
+        <button class="menu-item active" data-page="dashboard">
+          <span class="menu-icon">📊</span>
+          <span class="menu-label">Dashboard</span>
+        </button>
+        <button class="menu-item" data-page="new-projects">
+          <span class="menu-icon">➕</span>
+          <span class="menu-label">New Projects</span>
+        </button>
+        <button class="menu-item" data-page="calendar">
+          <span class="menu-icon">📅</span>
+          <span class="menu-label">Calendar</span>
+        </button>
+        <button class="menu-item" data-page="task-board">
+          <span class="menu-icon">📌</span>
+          <span class="menu-label">Task Board</span>
+        </button>
+        <button class="menu-item" data-page="settings">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-label">Settings</span>
+        </button>
+      
+  
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">S</div>
+          <div class="user-meta">
+            <div class="user-name">Student Name</div>
+            <div class="user-role">Time Management App</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <header class="topbar">
+        <h1 id="page-title">Dashboard</h1>
+        <div class="topbar-actions">
+          <div class="search-box">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <button class="topbar-btn">Notifications</button>
+          <button class="topbar-btn topbar-profile">Profile</button>
+        </div>
+      </header>
+
+      <section class="pages">
+        <!-- Dashboard -->
+        <section id="dashboard" class="page page-active">
+          <div class="page-grid">
+            <div class="card card-wide">
+              <h2>Overview</h2>
+              <p>
+                Track your time, deadlines and progress across all subjects in one place.
+              </p>
+              <div class="dashboard-stats">
+                <div class="stat">
+                  <div class="stat-value">6</div>
+                  <div class="stat-label">Active projects</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">12</div>
+                  <div class="stat-label">Tasks due this week</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value">78%</div>
+                  <div class="stat-label">Average progress</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Today</h3>
+              <ul class="list">
+                <li>Finish math homework</li>
+                <li>Prepare slides for economics project</li>
+                <li>Update reading log for literature</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>Upcoming deadlines</h3>
+              <ul class="list list-deadlines">
+                <li>
+                  <span>Project: Time Management App</span>
+                  <span class="badge danger">Tomorrow</span>
+                </li>
+                <li>
+                  <span>History essay</span>
+                  <span class="badge warning">In 3 days</span>
+                </li>
+                <li>
+                  <span>Physics lab report</span>
+                  <span class="badge neutral">Next week</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- New Projects -->
+        <section id="new-projects" class="page">
+          <div class="page-grid">
+            <div class="card card-wide">
+              <h2>Create new project</h2>
+              <form id="project-form" class="form">
+                <div class="form-row">
+                  <label for="project-name">Project name</label>
+                  <input
+                    type="text"
+                    id="project-name"
+                    placeholder="Time management web app"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <label for="project-subject">Subject</label>
+                  <input
+                    type="text"
+                    id="project-subject"
+                    placeholder="e.g. IT, Management, Design Thinking"
+                  />
+                </div>
+                <div class="form-row">
+                  <label for="project-deadline">Deadline</label>
+                  <input type="date" id="project-deadline" />
+                </div>
+                <div class="form-row">
+                  <label for="project-notes">Description</label>
+                  <textarea
+                    id="project-notes"
+                    rows="3"
+                    placeholder="Short description of the project..."
+                  ></textarea>
+                </div>
+                <button type="submit" class="primary-btn">
+                  Add project
+                </button>
+                <p id="project-message" class="form-message"></p>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Recently added projects</h3>
+              <ul id="project-list" class="list">
+                <!-- New projects will be added here by JS -->
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Calendar -->
+        <section id="calendar" class="page">
+          <div class="page-grid">
+            <div class="card card-wide">
+              <h2>Calendar</h2>
+              <p>
+                Visualize your study plan and deadlines. This is a simple static grid, you can reuse it in your prototype.
+              </p>
+              <div class="calendar-header">
+                <button class="ghost-btn" id="prev-month">&lt;</button>
+                <div id="calendar-month">March 2025</div>
+                <button class="ghost-btn" id="next-month">&gt;</button>
+              </div>
+              <div class="calendar-grid">
+                <div class="calendar-day-name">Mon</div>
+                <div class="calendar-day-name">Tue</div>
+                <div class="calendar-day-name">Wed</div>
+                <div class="calendar-day-name">Thu</div>
+                <div class="calendar-day-name">Fri</div>
+                <div class="calendar-day-name">Sat</div>
+                <div class="calendar-day-name">Sun</div>
+
+                <!-- Simple static example days -->
+                <div class="calendar-day muted">24</div>
+                <div class="calendar-day muted">25</div>
+                <div class="calendar-day muted">26</div>
+                <div class="calendar-day muted">27</div>
+                <div class="calendar-day muted">28</div>
+                <div class="calendar-day muted">1</div>
+                <div class="calendar-day muted">2</div>
+
+                <div class="calendar-day">3</div>
+                <div class="calendar-day has-event">
+                  4
+                  <span class="dot"></span>
+                </div>
+                <div class="calendar-day">5</div>
+                <div class="calendar-day has-event">
+                  6
+                  <span class="dot dot-warning"></span>
+                </div>
+                <div class="calendar-day">7</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+
+                <div class="calendar-day">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day has-event">
+                  12
+                  <span class="dot"></span>
+                </div>
+                <div class="calendar-day">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Events</h3>
+              <ul class="list list-deadlines">
+                <li>
+                  <span>Time management app presentation</span>
+                  <span class="badge danger">4 March</span>
+                </li>
+                <li>
+                  <span>Team meeting</span>
+                  <span class="badge warning">6 March</span>
+                </li>
+                <li>
+                  <span>Exam preparation session</span>
+                  <span class="badge neutral">12 March</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Task Board -->
+        <section id="task-board" class="page">
+          <div class="page-grid board-grid">
+            <div class="card board-column">
+              <h3>To Do</h3>
+              <ul class="list" id="todo-list">
+                <li>Define user stories</li>
+                <li>Prepare wireframes</li>
+              </ul>
+            </div>
+            <div class="card board-column">
+              <h3>In Progress</h3>
+              <ul class="list" id="inprogress-list">
+                <li>Design UI for dashboard</li>
+              </ul>
+            </div>
+            <div class="card board-column">
+              <h3>Done</h3>
+              <ul class="list" id="done-list">
+                <li>Research time management methods</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="page">
+          <div class="page-grid">
+            <div class="card card-wide">
+              <h2>Settings</h2>
+              <form class="form" id="settings-form">
+                <div class="form-row">
+                  <label for="student-name">Student name</label>
+                  <input
+                    type="text"
+                    id="student-name"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div class="form-row">
+                  <label for="study-hours">Daily study target (hours)</label>
+                  <input
+                    type="number"
+                    id="study-hours"
+                    min="1"
+                    max="12"
+                    placeholder="3"
+                  />
+                </div>
+                <div class="form-row">
+                  <label for="theme-select">Theme</label>
+                  <select id="theme-select">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark (demo only)</option>
+                  </select>
+                </div>
+                <button type="submit" class="primary-btn">
+                  Save settings
+                </button>
+                <p id="settings-message" class="form-message"></p>
+              </form>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+   
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -130,100 +130,155 @@ if (initialActive) {
     // небольшая задержка, чтобы браузер успел отрисовать
     setTimeout(() => moveIndicatorTo(initialActive), 50);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const menuItems = document.querySelectorAll(".menu-item");
+  const pages = document.querySelectorAll(".page");
+  const pageTitle = document.getElementById("page-title");
 
-// ========== ACCOUNT FORM LOGIC ==========
+  // Навигация между страницами
+  menuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const pageId = item.dataset.page;
 
-const accountForm = document.getElementById("accountForm");
-const editBtn = document.getElementById("editProfileBtn");
-const cancelBtn = document.getElementById("cancelEditBtn");
-const saveBtn = document.getElementById("saveProfileBtn");
-const toast = document.getElementById("toast");
-const nameHeading = document.getElementById("accountNameHeading");
+      // Активный пункт меню
+      menuItems.forEach((btn) => btn.classList.remove("active"));
+      item.classList.add("active");
 
-const formFields = ["firstName", "lastName", "email", "phone", "city", "bio"];
-
-// дефолтные данные
-const defaultData = {
-    firstName: "Jimmy",
-    lastName: "Steven",
-    email: "mrbeast_1@gmail.com",
-    phone: "+1 669 457 3671",
-    city: "Bishkek",
-    bio: "Student"
-};
-
-function loadData() {
-    const stored = localStorage.getItem("accountData");
-    const data = stored ? JSON.parse(stored) : defaultData;
-
-    formFields.forEach(name => {
-        const field = document.getElementById(name);
-        if (field && data[name] !== undefined) {
-            field.value = data[name];
+      // Переключение страниц
+      pages.forEach((page) => {
+        if (page.id === pageId) {
+          page.classList.add("page-active");
+        } else {
+          page.classList.remove("page-active");
         }
+      });
+
+      // Заголовок
+      const label = item.querySelector(".menu-label");
+      if (label) {
+        pageTitle.textContent = label.textContent;
+      }
     });
+  });
 
-    updateHeadingName();
-}
+  // Простая логика для New Projects
+  const projectForm = document.getElementById("project-form");
+  const projectList = document.getElementById("project-list");
+  const projectMessage = document.getElementById("project-message");
 
-function saveData() {
-    const data = {};
-    formFields.forEach(name => {
-        const field = document.getElementById(name);
-        data[name] = field.value.trim();
-    });
-    localStorage.setItem("accountData", JSON.stringify(data));
-}
+  if (projectForm) {
+    projectForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-function setViewMode(isViewMode) {
-    const inputs = accountForm.querySelectorAll("input, textarea");
+      const nameInput = document.getElementById("project-name");
+      const subjectInput = document.getElementById("project-subject");
+      const deadlineInput = document.getElementById("project-deadline");
 
-    if (isViewMode) {
-        accountForm.classList.add("view-mode");
-        inputs.forEach(i => i.setAttribute("disabled", "disabled"));
-    } else {
-        accountForm.classList.remove("view-mode");
-        inputs.forEach(i => i.removeAttribute("disabled"));
-    }
-}
+      const name = nameInput.value.trim();
+      const subject = subjectInput.value.trim();
+      const deadline = deadlineInput.value;
 
-function updateHeadingName() {
-    const first = document.getElementById("firstName").value.trim() || "Student";
-    const last = document.getElementById("lastName").value.trim() || "Name";
-    nameHeading.textContent = `${first} ${last}`;
-}
-
-function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 2200);
-}
-
-// события
-
-editBtn.addEventListener("click", () => {
-    setViewMode(false);
-});
-
-cancelBtn.addEventListener("click", () => {
-    loadData();
-    setViewMode(true);
-});
-
-accountForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    if (!accountForm.reportValidity()) {
+      if (!name) {
+        projectMessage.textContent = "Please enter project name.";
         return;
+      }
+
+      const li = document.createElement("li");
+      const infoSpan = document.createElement("span");
+      const metaSpan = document.createElement("span");
+
+      infoSpan.textContent = name;
+
+      let metaText = [];
+      if (subject) metaText.push(subject);
+      if (deadline) metaText.push(deadline);
+      metaSpan.classList.add("badge", "neutral");
+      metaSpan.textContent = metaText.join(" • ") || "New";
+
+      li.appendChild(infoSpan);
+      li.appendChild(metaSpan);
+      projectList.prepend(li);
+
+      projectMessage.textContent = "Project added.";
+      projectForm.reset();
+
+      setTimeout(() => {
+        projectMessage.textContent = "";
+      }, 2000);
+    });
+  }
+
+  // Простая демо логика для календаря — смена названия месяца
+  const calendarMonth = document.getElementById("calendar-month");
+  const prevMonthBtn = document.getElementById("prev-month");
+  const nextMonthBtn = document.getElementById("next-month");
+
+  const months = ["January 2025", "February 2025", "March 2025", "April 2025"];
+  let currentMonthIndex = 2; // March 2025
+
+  function updateCalendarMonth() {
+    if (calendarMonth) {
+      calendarMonth.textContent = months[currentMonthIndex];
+    }
+  }
+
+  if (prevMonthBtn && nextMonthBtn) {
+    prevMonthBtn.addEventListener("click", () => {
+      currentMonthIndex = (currentMonthIndex - 1 + months.length) % months.length;
+      updateCalendarMonth();
+    });
+
+    nextMonthBtn.addEventListener("click", () => {
+      currentMonthIndex = (currentMonthIndex + 1) % months.length;
+      updateCalendarMonth();
+    });
+  }
+
+  updateCalendarMonth();
+
+  // Settings: простое сохранение в память браузера (localStorage) как демо
+  const settingsForm = document.getElementById("settings-form");
+  const settingsMessage = document.getElementById("settings-message");
+
+  if (settingsForm) {
+    // Подгрузить сохраненные настройки
+    const savedSettings = JSON.parse(localStorage.getItem("tm-settings") || "{}");
+    if (savedSettings.studentName) {
+      document.getElementById("student-name").value = savedSettings.studentName;
+    }
+    if (savedSettings.studyHours) {
+      document.getElementById("study-hours").value = savedSettings.studyHours;
+    }
+    if (savedSettings.theme) {
+      document.getElementById("theme-select").value = savedSettings.theme;
     }
 
-    saveData();
-    setViewMode(true);
-    updateHeadingName();
-    showToast("Profile saved");
-});
+    settingsForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-// init
-loadData();
-setViewMode(true);
+      const studentName = document.getElementById("student-name").value.trim();
+      const studyHours = document.getElementById("study-hours").value;
+      const theme = document.getElementById("theme-select").value;
+
+      const data = {
+        studentName,
+        studyHours,
+        theme,
+      };
+
+      localStorage.setItem("tm-settings", JSON.stringify(data));
+
+      // Обновить имя в сайдбаре (если есть)
+      const nameEl = document.querySelector(".user-name");
+      if (nameEl && studentName) {
+        nameEl.textContent = studentName;
+      }
+
+      settingsMessage.textContent = "Settings saved.";
+      setTimeout(() => {
+        settingsMessage.textContent = "";
+      }, 2000);
+    });
+  }
+});
 
